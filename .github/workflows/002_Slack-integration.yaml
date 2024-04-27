@@ -14,7 +14,7 @@ jobs:
             
             # Deploy the Code to Production
             - name: Deploy to Production
-              run: !
+              run: |
                 # Run you deployment comments here
                 echo "Deployment Successfully"
 
