@@ -1,0 +1,34 @@
+name: Notify Slack of Build and Deployment Status
+
+on: 
+    push:
+        branches:
+            - main
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            # Set up your build steps here
+            
+            # Deploy the Code to Production
+            - name: Deploy to Production
+              run: !
+                # Run you deployment comments here
+                echo "Deployment Successfully"
+
+            # Send a notification to Slack
+            - name: Send Notification to Slack
+              uses: rtCamp/action-slack-notify@v2
+              env:
+                # Specify the slack channel to notify
+                SLACK_CHANNEL: "#some-gcp-stuff"
+                # Set en emoji icon for the notification
+                SLACK_ICON_EMOJI: ':rocket'
+                # Specify the username for the notification
+                SLACK_USERNAME: 'GITHUB ACTIONS'
+                # Set the message includes in notification
+                SLACK_MESSAGE: 'Build and deployment successfully'
+                # Use a secret to store the slack webhook url
+                SLACK_WEBHOOK: ${{ secret.SLACK_WEBHOOK }} #USE a secret to stroe the slack webhook url for security purposes
