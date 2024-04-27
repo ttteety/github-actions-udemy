@@ -1,0 +1,28 @@
+name: Build and push Docker Image 
+
+on: 
+    push:
+        branches:
+            - main 
+
+env:
+    IMAGE_NAME: my-docker-image
+    DOCKER_REGISTRY: my-container-registry.azurecr.io
+    DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+    DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            
+            - name: Build docker image
+              run: docker build -t $IMAGE_NAME
+
+            - name: Login docker registry
+              run: docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME -p $DOCKER_PASSWORDD
+
+            - name: Push Docker Image
+              run: docker push $DOCKER_REGISTRY/$IMAGE_NAME 

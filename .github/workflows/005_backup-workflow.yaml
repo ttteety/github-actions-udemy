@@ -1,0 +1,28 @@
+name: Backup files
+
+on: 
+    schedule: 
+        - cron: "0 0 * * *" # Run everyday at midnight
+
+jobs:
+    backup:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout Code
+          uses: actions/checkout@v2
+        - name: Create Backup
+          run: |
+            tar -czvf backup.tar.gz /path/to/files
+        - name: Upload Backup
+          uses: actions/upload-artifact@v2
+          with:
+            name: backup
+            path: backup.tar-gz
+        - name: Copy Backup to remote location
+          uses: appleboy/scp-action@master
+          with:
+            host: ${{ secrets.REMOTE_HOST }}
+            username: ${{ secrets.REMOTE_USERNAME }}
+            password: ${{ secrets.REMOTE_PASSWORD }}
+            source: backup.tar.gz
+            target: /path/to/remote/location
