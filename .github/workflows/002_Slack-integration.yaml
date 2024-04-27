@@ -31,4 +31,4 @@ jobs:
                 # Set the message includes in notification
                 SLACK_MESSAGE: 'Build and deployment successfully'
                 # Use a secret to store the slack webhook url
-                SLACK_WEBHOOK: ${{ secret.SLACK_WEBHOOK }} #USE a secret to stroe the slack webhook url for security purposes
+                SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} #USE a secret to stroe the slack webhook url for security purposes
